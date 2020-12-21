@@ -19,6 +19,7 @@ export interface MenuSetting {
   topMenuAlign: 'start' | 'center' | 'end';
   trigger: TriggerEnum;
   accordion: boolean;
+  mixSidebarFixed: boolean;
 }
 
 export interface MultiTabsSetting {
@@ -109,6 +110,7 @@ export interface ProjectConfig {
   // pageLayout是否开启keep-alive
   openKeepAlive: boolean;
 
+  //
   // 锁屏时间
   lockTime: number;
   // 显示面包屑

@@ -41,6 +41,8 @@ const getCollapsedShowTitle = computed(() => unref(getMenuSetting).collapsedShow
 
 const getTopMenuAlign = computed(() => unref(getMenuSetting).topMenuAlign);
 
+const getMixSidebarFixed = computed(() => unref(getMenuSetting).mixSidebarFixed);
+
 const getIsSidebarType = computed(() => unref(getMenuType) === MenuTypeEnum.SIDEBAR);
 
 const getIsTopMenu = computed(() => unref(getMenuType) === MenuTypeEnum.TOP_MENU);
@@ -59,6 +61,10 @@ const getShowHeaderTrigger = computed(() => {
 
 const getIsHorizontal = computed(() => {
   return unref(getMenuMode) === MenuModeEnum.HORIZONTAL;
+});
+
+const getIsMixSidebar = computed(() => {
+  return unref(getMenuType) === MenuTypeEnum.MIX_SIDEBAR;
 });
 
 const getIsMixMode = computed(() => {
@@ -135,5 +141,6 @@ export function useMenuSetting() {
     getMenuBgColor,
     getShowSidebar,
     getIsMixMode,
+    getIsMixSidebar,
   };
 }

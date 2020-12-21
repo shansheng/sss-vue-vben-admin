@@ -12,6 +12,7 @@ export default {
   menuTriggerTop: 'Top',
   // menu type
   menuTypeSidebar: 'Left menu mode',
+  menuTypeMixSidebar: 'Left menu mixed mode',
   menuTypeMix: 'Mixed mode',
   menuTypeTopMenu: 'Top menu mode',
 

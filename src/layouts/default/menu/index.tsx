@@ -137,7 +137,6 @@ export default defineComponent({
           items={unref(menusRef)}
           accordion={unref(getAccordion)}
           onMenuClick={handleMenuClick}
-          showLogo={unref(getIsShowLogo)}
         />
       );
     }

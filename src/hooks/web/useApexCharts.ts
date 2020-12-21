@@ -22,7 +22,7 @@ export function useApexCharts(elRef: Ref<HTMLDivElement>) {
 
   tryOnUnmounted(() => {
     if (!chartInstance) return;
-    chartInstance.destroy();
+    chartInstance?.destroy?.();
     chartInstance = null;
   });
 

@@ -10,7 +10,7 @@
   >
     <img src="/@/assets/images/logo.png" />
     <div class="ml-2 ellipsis" :class="[`${prefixCls}__title`]" v-show="showTitle">
-      {{ globSetting.title }}
+      {{ title }}
     </div>
   </div>
 </template>
@@ -42,7 +42,7 @@
 
       const { getCollapsedShowTitle } = useMenuSetting();
 
-      const globSetting = useGlobSetting();
+      const { title } = useGlobSetting();
 
       const go = useGo();
 
@@ -52,7 +52,7 @@
 
       return {
         handleGoHome,
-        globSetting,
+        title,
         getCollapsedShowTitle,
         prefixCls,
       };

@@ -16,6 +16,7 @@ const {
   getSplit,
   getShowHeaderTrigger,
   getIsSidebarType,
+  getIsMixSidebar,
   getIsTopMenu,
 } = useMenuSetting();
 const { getShowBreadCrumb, getShowLogo } = useRootSetting();
@@ -66,7 +67,7 @@ const getShowBread = computed(() => {
 });
 
 const getShowHeaderLogo = computed(() => {
-  return unref(getShowLogo) && !unref(getIsSidebarType);
+  return unref(getShowLogo) && !unref(getIsSidebarType) && !unref(getIsMixSidebar);
 });
 
 const getShowContent = computed(() => {

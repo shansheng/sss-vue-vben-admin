@@ -4,6 +4,7 @@ import { MenuModeEnum, MenuTypeEnum, TopMenuAlignEnum, TriggerEnum } from '/@/en
 import mixImg from '/@/assets/images/layout/menu-mix.svg';
 import sidebarImg from '/@/assets/images/layout/menu-sidebar.svg';
 import menuTopImg from '/@/assets/images/layout/menu-top.svg';
+import mixSidebarImg from '/@/assets/images/layout/mix-sidebar.svg';
 import { useI18n } from '/@/hooks/web/useI18n';
 
 const { t } = useI18n();
@@ -130,5 +131,11 @@ export const menuTypeList = [
     mode: MenuModeEnum.HORIZONTAL,
     type: MenuTypeEnum.TOP_MENU,
     src: menuTopImg,
+  },
+  {
+    title: t('layout.setting.menuTypeMixSidebar'),
+    mode: MenuModeEnum.INLINE,
+    type: MenuTypeEnum.MIX_SIDEBAR,
+    src: mixSidebarImg,
   },
 ];

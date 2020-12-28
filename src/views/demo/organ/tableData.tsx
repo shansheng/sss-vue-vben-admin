@@ -1,4 +1,5 @@
 import { BasicColumn } from '/@/components/Table/src/types/table';
+import { FormProps } from '/@/components/Table';
 
 export function getBasicColumns(): BasicColumn[] {
   return [
@@ -32,4 +33,43 @@ export function getBasicColumns(): BasicColumn[] {
       dataIndex: 'createtime',
     },
   ];
+}
+
+export function getFormConfig(): Partial<FormProps> {
+  return {
+    labelWidth: 100,
+    schemas: [
+      {
+        field: `orgname`,
+        label: `组织名称`,
+        component: 'Input',
+        colProps: {
+          xl: 12,
+          xxl: 8,
+        },
+      },
+      {
+        field: `status`,
+        label: `状态`,
+        component: 'Select',
+        defaultValue: '',
+        componentProps: {
+          options: [
+            {
+              label: '全部',
+              value: '',
+            },
+            {
+              label: '启用',
+              value: 'running',
+            },
+          ],
+        },
+        colProps: {
+          xl: 12,
+          xxl: 8,
+        },
+      },
+    ],
+  };
 }

@@ -1,44 +1,28 @@
 <template>
   <div class="p-4">
-    <BasicTable @register="registerTable">
-      <template #toolbar>
-        <a-button type="primary" @click="handleReloadCurrent"> 刷新当前页 </a-button>
-        <a-button type="primary" @click="handleReload"> 刷新并返回第一页 </a-button>
-      </template>
-    </BasicTable>
+    <BasicTable @register="registerTable"> </BasicTable>
   </div>
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
   import { BasicTable, useTable } from '/@/components/Table';
-  import { getBasicColumns } from './tableData';
+  import { getBasicColumns, getFormConfig } from './tableData';
 
   import { orgListApi } from '/@/api/demo/organ';
   export default defineComponent({
     components: { BasicTable },
     setup() {
-      const [registerTable, { reload }] = useTable({
+      const [registerTable] = useTable({
         title: '组织机构列表',
         api: orgListApi,
         columns: getBasicColumns(),
+        useSearchForm: true,
+        formConfig: getFormConfig(),
+        showTableSetting: true,
       });
-      function handleReloadCurrent() {
-        reload();
-        // reload({
-        //   searchInfo: 'xxx',
-        // });
-      }
-
-      function handleReload() {
-        reload({
-          page: 1,
-        });
-      }
 
       return {
         registerTable,
-        handleReloadCurrent,
-        handleReload,
       };
     },
   });

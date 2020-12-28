@@ -15,6 +15,7 @@ export function getBasicColumns(): BasicColumn[] {
     {
       title: '名称',
       dataIndex: 'orgname',
+      sorter: true,
       width: 180,
     },
     {

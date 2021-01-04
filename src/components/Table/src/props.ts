@@ -9,18 +9,29 @@ import type {
   TableRowSelection,
 } from './types/table';
 import type { FormProps } from '/@/components/Form';
-import { DEFAULT_SORT_FN, FETCH_SETTING } from './const';
+import { DEFAULT_FILTER_FN, DEFAULT_SORT_FN, FETCH_SETTING } from './const';
 import { propTypes } from '/@/utils/propTypes';
 
 // 注释看 types/table
 export const basicProps = {
+  clickToRowSelect: propTypes.bool.def(true),
+
+  isTreeTable: propTypes.bool.def(false),
+
   tableSetting: {
     type: Object as PropType<TableSetting>,
   },
+
   inset: propTypes.bool,
+
   sortFn: {
     type: Function as PropType<(sortInfo: SorterResult) => any>,
     default: DEFAULT_SORT_FN,
+  },
+
+  filterFn: {
+    type: Function as PropType<(data: Partial<Recordable<string[]>>) => any>,
+    default: DEFAULT_FILTER_FN,
   },
 
   showTableSetting: propTypes.bool,
@@ -34,7 +45,6 @@ export const basicProps = {
   },
 
   canColDrag: propTypes.bool.def(true),
-  isTreeTable: propTypes.bool,
   api: {
     type: Function as PropType<(...arg: any[]) => Promise<any>>,
     default: null,
@@ -75,7 +85,7 @@ export const basicProps = {
   },
   columns: {
     type: [Array] as PropType<BasicColumn[]>,
-    default: null,
+    default: () => [],
   },
   showIndexColumn: propTypes.bool.def(true),
   indexColumnProps: {
@@ -95,7 +105,7 @@ export const basicProps = {
     default: null,
   },
   title: {
-    type: [String, Function] as PropType<string | ((data: any) => any)>,
+    type: [String, Function] as PropType<string | ((data: Recordable) => string)>,
     default: null,
   },
   titleHelpMessage: {

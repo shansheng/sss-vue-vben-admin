@@ -110,7 +110,7 @@
 
         const inlineCollapseOptions: { inlineCollapsed?: boolean } = {};
         if (isInline) {
-          inlineCollapseOptions.inlineCollapsed = unref(getCollapsed);
+          inlineCollapseOptions.inlineCollapsed = props.mixSider ? false : unref(getCollapsed);
         }
         return inlineCollapseOptions;
       });
@@ -125,15 +125,13 @@
         }
       });
 
-      watch(
-        () => props.items,
-        () => {
-          handleMenuChange();
-        }
-        // {
-        //   immediate: true,
-        // }
-      );
+      !props.mixSider &&
+        watch(
+          () => props.items,
+          () => {
+            handleMenuChange();
+          }
+        );
 
       async function handleMenuClick({ key, keyPath }: { key: string; keyPath: string[] }) {
         const { beforeClickFn } = props;

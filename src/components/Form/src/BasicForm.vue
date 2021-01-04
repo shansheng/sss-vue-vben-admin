@@ -38,7 +38,7 @@
 
   import { dateItemType } from './helper';
   import moment from 'moment';
-  import { cloneDeep } from 'lodash-es';
+  // import { cloneDeep } from 'lodash-es';
   import { deepMerge } from '/@/utils';
 
   import { useFormValues } from './hooks/useFormValues';
@@ -76,7 +76,7 @@
       // Get the basic configuration of the form
       const getProps = computed(
         (): FormProps => {
-          return deepMerge(cloneDeep(props), unref(propsRef));
+          return { ...props, ...unref(propsRef) } as FormProps;
         }
       );
 

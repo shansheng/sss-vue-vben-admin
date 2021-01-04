@@ -1,5 +1,5 @@
 <template>
-  <Select v-bind="attrs" :options="options" v-model:value="state">
+  <Select v-bind="attrs" :options="getOptions" v-model:value="state">
     <template #[item]="data" v-for="item in Object.keys($slots)">
       <slot :name="item" v-bind="data" />
     </template>
@@ -15,7 +15,7 @@
   </Select>
 </template>
 <script lang="ts">
-  import { defineComponent, PropType, ref, watchEffect } from 'vue';
+  import { defineComponent, PropType, ref, watchEffect, computed, unref } from 'vue';
   import { Select } from 'ant-design-vue';
   import { isFunction } from '/@/utils/is';
   import { useRuleFormItem } from '/@/hooks/component/useFormItem';
@@ -24,33 +24,34 @@
 
   import { LoadingOutlined } from '@ant-design/icons-vue';
   import { useI18n } from '/@/hooks/web/useI18n';
+  import { propTypes } from '/@/utils/propTypes';
 
   type OptionsItem = { label: string; value: string; disabled?: boolean };
 
   export default defineComponent({
-    name: 'RadioButtonGroup',
+    name: 'ApiSelect',
     components: {
       Select,
       LoadingOutlined,
     },
     props: {
-      value: {
-        type: String as PropType<string>,
-      },
+      value: propTypes.string,
       api: {
-        type: Function as PropType<(arg: Recordable) => Promise<OptionsItem[]>>,
+        type: Function as PropType<(arg?: Recordable) => Promise<OptionsItem[]>>,
         default: null,
       },
+      // api params
       params: {
         type: Object as PropType<Recordable>,
         default: () => {},
       },
-      resultField: {
-        type: String as PropType<string>,
-        default: '',
-      },
+      // support xxx.xxx.xx
+      resultField: propTypes.string.def(''),
+      labelField: propTypes.string.def('label'),
+      valueField: propTypes.string.def('value'),
     },
-    setup(props) {
+    emits: ['options-change', 'change'],
+    setup(props, { emit }) {
       const options = ref<OptionsItem[]>([]);
       const loading = ref(false);
       const attrs = useAttrs();
@@ -58,6 +59,20 @@
 
       // Embedded in the form, just use the hook binding to perform form verification
       const [state] = useRuleFormItem(props);
+
+      const getOptions = computed(() => {
+        const { labelField, valueField } = props;
+
+        return unref(options).reduce((prev, next: Recordable) => {
+          if (next) {
+            prev.push({
+              label: next[labelField],
+              value: next[valueField],
+            });
+          }
+          return prev;
+        }, [] as OptionsItem[]);
+      });
 
       watchEffect(() => {
         fetch();
@@ -72,18 +87,20 @@
           const res = await api(props.params);
           if (Array.isArray(res)) {
             options.value = res;
+            emit('options-change', unref(options));
             return;
           }
           if (props.resultField) {
             options.value = get(res, props.resultField) || [];
           }
+          emit('options-change', unref(options));
         } catch (error) {
           console.warn(error);
         } finally {
           loading.value = false;
         }
       }
-      return { state, attrs, options, loading, t };
+      return { state, attrs, getOptions, loading, t };
     },
   });
 </script>

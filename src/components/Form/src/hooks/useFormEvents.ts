@@ -117,7 +117,7 @@ export function useFormEvents({
     const schemaList: FormSchema[] = cloneDeep(unref(getSchema));
 
     const index = schemaList.findIndex((schema) => schema.field === prefixField);
-    const hasInList = schemaList.some((item) => item.field === schema.field);
+    const hasInList = schemaList.some((item) => item.field === prefixField || schema.field);
 
     if (!hasInList) return;
 
@@ -147,6 +147,7 @@ export function useFormEvents({
       error(
         'All children of the form Schema array that need to be updated must contain the `field` field'
       );
+      return;
     }
     const schema: FormSchema[] = [];
     updateData.forEach((item) => {
@@ -178,12 +179,10 @@ export function useFormEvents({
   }
 
   async function validateFields(nameList?: NamePath[] | undefined) {
-    const res = await unref(formElRef)?.validateFields(nameList || []);
-    return res;
+    return unref(formElRef)?.validateFields(nameList);
   }
-
   async function validate(nameList?: NamePath[] | undefined) {
-    return await unref(formElRef)?.validate(nameList || []);
+    return await unref(formElRef)?.validate(nameList);
   }
 
   async function clearValidate(name?: string | string[]) {

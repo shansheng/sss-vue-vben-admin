@@ -87,6 +87,7 @@
       'row-mouseleave',
       'edit-end',
       'edit-cancel',
+      'edit-row-end',
     ],
     setup(props, { attrs, emit, slots }) {
       const tableElRef = ref<ComponentRef>(null);
@@ -102,7 +103,13 @@
       });
 
       const { getLoading, setLoading } = useLoading(getProps);
-      const { getPaginationInfo, getPagination, setPagination } = usePagination(getProps);
+      const {
+        getPaginationInfo,
+        getPagination,
+        setPagination,
+        setShowPagination,
+        getShowPagination,
+      } = usePagination(getProps);
 
       const {
         getRowSelection,
@@ -229,6 +236,8 @@
         getCacheColumns,
         emit,
         updateTableData,
+        setShowPagination,
+        getShowPagination,
         getSize: () => {
           return unref(getBindValues).size as SizeType;
         },

@@ -10,6 +10,7 @@
 
   import { orgListApi } from '/@/api/demo/organ';
   export default defineComponent({
+    name: 'OrganList',
     components: { BasicTable },
     setup() {
       const [registerTable] = useTable({

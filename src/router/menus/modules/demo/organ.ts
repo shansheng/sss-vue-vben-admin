@@ -11,6 +11,10 @@ const menu: MenuModule = {
     },
     children: [
       {
+        path: 'organmng',
+        name: t('routes.demo.organ.orgmng'),
+      },
+      {
         path: 'organlist',
         name: t('routes.demo.organ.orgs'),
       },

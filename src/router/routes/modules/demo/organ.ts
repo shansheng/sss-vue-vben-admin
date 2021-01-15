@@ -19,7 +19,15 @@ const organ: AppRouteModule = {
       meta: {
         title: t('routes.demo.organ.orgs'),
       },
-      component: () => import('/@/views/demo/organ/organ.vue'),
+      component: () => import('/@/views/demo/organ/Organ.vue'),
+    },
+    {
+      path: 'organmng',
+      name: 'orgmng',
+      meta: {
+        title: t('routes.demo.organ.orgmng'),
+      },
+      component: () => import('/@/views/demo/organ/OrgMng.vue'),
     },
   ],
 };

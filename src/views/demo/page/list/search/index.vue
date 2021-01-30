@@ -15,7 +15,9 @@
           <a-list-item>
             <a-list-item-meta>
               <template #description>
-                <div :class="`${prefixCls}__content`">{{ item.content }}</div>
+                <div :class="`${prefixCls}__content`">
+                  {{ item.content }}
+                </div>
                 <div :class="`${prefixCls}__action`">
                   <template v-for="(action, index) in actions" :key="index">
                     <div :class="`${prefixCls}__action-item`">
@@ -32,10 +34,14 @@
                 </div>
               </template>
               <template #title>
-                <p :class="`${prefixCls}__title`"> {{ item.title }}</p>
+                <p :class="`${prefixCls}__title`">
+                  {{ item.title }}
+                </p>
                 <div>
                   <template v-for="(tag, index) in item.description" :key="index">
-                    <Tag class="mb-2">{{ tag }}</Tag>
+                    <Tag class="mb-2">
+                      {{ tag }}
+                    </Tag>
                   </template>
                 </div>
               </template>
@@ -53,9 +59,18 @@
   import { BasicForm } from '/@/components/Form/index';
   import { actions, searchList, schemas } from './data';
   import { PageWrapper } from '/@/components/Page';
+  import { List } from 'ant-design-vue';
 
   export default defineComponent({
-    components: { Icon, Tag, BasicForm, PageWrapper },
+    components: {
+      Icon,
+      Tag,
+      BasicForm,
+      PageWrapper,
+      [List.name]: List,
+      [List.Item.name]: List.Item,
+      AListItemMeta: List.Item.Meta,
+    },
     setup() {
       return {
         prefixCls: 'list-search',

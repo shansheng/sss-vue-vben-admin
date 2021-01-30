@@ -1,10 +1,10 @@
 <template>
-  <div class="analysis p-4">
+  <div class="p-4 analysis">
     <a-row class="pl-2">
       <template v-for="item in growCardList" :key="item.title">
-        <ACol :sm="24" :md="12" :lg="6">
+        <a-col :sm="24" :md="12" :lg="6">
           <GrowCard :info="item" />
-        </ACol>
+        </a-col>
       </template>
     </a-row>
 
@@ -42,25 +42,25 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
   import GrowCard from './components/GrowCard.vue';
-  import TrendLine from './components/TrendLine.vue';
   import AnalysisLine from './components/AnalysisLine.vue';
   import AnalysisPie from './components/AnalysisPie.vue';
   import AnalysisBar from './components/AnalysisBar.vue';
   import TaskCard from './components/TaskCard.vue';
   import FlowAnalysis from './components/FlowAnalysis';
   import { CollapseContainer } from '/@/components/Container/index';
-
+  import { Row, Col } from 'ant-design-vue';
   import { growCardList, taskList } from './data';
   export default defineComponent({
     components: {
       GrowCard,
       CollapseContainer,
-      TrendLine,
       AnalysisLine,
       AnalysisPie,
       AnalysisBar,
       TaskCard,
       FlowAnalysis,
+      [Row.name]: Row,
+      [Col.name]: Col,
     },
     setup() {
       return { growCardList, taskList };

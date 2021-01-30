@@ -2,7 +2,7 @@
   <div class="step3">
     <a-result status="success" title="操作成功" sub-title="预计两小时内到账">
       <template #extra>
-        <a-button type="primary" @click="redo">再转一笔 </a-button>
+        <a-button type="primary" @click="redo"> 再转一笔 </a-button>
         <a-button> 查看账单 </a-button>
       </template>
     </a-result>
@@ -18,9 +18,13 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-
+  import { Result, Descriptions } from 'ant-design-vue';
   export default defineComponent({
-    components: {},
+    components: {
+      [Result.name]: Result,
+      [Descriptions.name]: Descriptions,
+      [Descriptions.Item.name]: Descriptions.Item,
+    },
     emits: ['redo'],
     setup(_, { emit }) {
       return {

@@ -1,5 +1,5 @@
 <template>
-  <div :class="`${prefixCls}-dom`" :style="getDomStyle" />
+  <div :class="`${prefixCls}-dom`" :style="getDomStyle"></div>
 
   <div
     v-click-outside="handleClickOutside"
@@ -37,7 +37,9 @@
             :size="getCollapsed ? 16 : 20"
             :icon="item.meta && item.meta.icon"
           />
-          <p :class="`${prefixCls}-module__name`">{{ t(item.name) }}</p>
+          <p :class="`${prefixCls}-module__name`">
+            {{ t(item.name) }}
+          </p>
         </li>
       </ul>
     </ScrollContainer>
@@ -61,9 +63,7 @@
         />
       </div>
       <ScrollContainer :class="`${prefixCls}-menu-list__content`">
-        <BasicMenu
-          :isHorizontal="false"
-          mode="inline"
+        <SimpleMenu
           :items="chilrenMenus"
           :theme="getMenuTheme"
           mixSider
@@ -85,7 +85,7 @@
 
   import { defineComponent, onMounted, ref, computed, unref } from 'vue';
 
-  import { BasicMenu, MenuTag } from '/@/components/Menu';
+  import { MenuTag } from '/@/components/Menu';
   import { ScrollContainer } from '/@/components/Container';
   import Icon from '/@/components/Icon';
   import { AppLogo } from '/@/components/Application';
@@ -103,13 +103,14 @@
   import clickOutside from '/@/directives/clickOutside';
   import { getShallowMenus, getChildrenMenus, getCurrentParentPath } from '/@/router/menus';
   import { listenerLastChangeTab } from '/@/logics/mitt/tabChange';
+  import { SimpleMenu } from '/@/components/SimpleMenu';
 
   export default defineComponent({
     name: 'LayoutMixSider',
     components: {
       ScrollContainer,
       AppLogo,
-      BasicMenu,
+      SimpleMenu,
       MenuTag,
       Icon,
       Trigger,
@@ -157,9 +158,11 @@
       );
 
       const getIsFixed = computed(() => {
+        /* eslint-disable-next-line */
         mixSideHasChildren.value = unref(chilrenMenus).length > 0;
         const isFixed = unref(getMixSideFixed) && unref(mixSideHasChildren);
         if (isFixed) {
+          /* eslint-disable-next-line */
           openMenu.value = true;
         }
         return isFixed;
@@ -335,6 +338,7 @@
 <style lang="less">
   @prefix-cls: ~'@{namespace}-layout-mix-sider';
   @tag-prefix-cls: ~'@{namespace}-basic-menu-item-tag';
+  @menu-prefix-cls: ~'@{namespace}-menu';
   @width: 80px;
   .@{prefix-cls} {
     position: fixed;
@@ -349,6 +353,10 @@
       position: absolute;
       top: 6px;
       right: 2px;
+    }
+
+    .@{menu-prefix-cls} {
+      width: 100% !important;
     }
 
     &-dom {
@@ -392,6 +400,10 @@
         }
       }
       .@{prefix-cls}-menu-list {
+        &__content {
+          box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+        }
+
         &__title {
           .pushpin {
             color: rgba(0, 0, 0, 0.35);
@@ -578,10 +590,10 @@
 
     &-drag-bar {
       position: absolute;
-      top: 0;
-      right: -3px;
-      width: 3px;
-      height: 100%;
+      top: 50px;
+      right: -1px;
+      width: 1px;
+      height: calc(100% - 50px);
       cursor: ew-resize;
       background: #f8f8f9;
       border-top: none;

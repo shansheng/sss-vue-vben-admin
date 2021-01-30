@@ -29,10 +29,14 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
   const isBuild = command === 'build';
 
   return {
+    base: VITE_PUBLIC_PATH,
     root,
-    alias: {
-      '/@/': `${pathResolve('src')}/`,
-    },
+    alias: [
+      {
+        find: /^\/@\//,
+        replacement: pathResolve('src') + '/',
+      },
+    ],
     server: {
       port: VITE_PORT,
       proxy: createProxy(VITE_PROXY),
@@ -41,21 +45,12 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       },
     },
     build: {
-      base: VITE_PUBLIC_PATH,
+      polyfillDynamicImport: VITE_LEGACY,
       terserOptions: {
         compress: {
           keep_infinity: true,
           drop_console: VITE_DROP_CONSOLE,
         },
-      },
-      // minify: 'esbuild',
-      rollupOptions: {
-        output: {
-          compact: true,
-        },
-      },
-      commonjsOptions: {
-        ignore: ['fs', 'crypto', 'stream'],
       },
     },
     define: {
@@ -83,16 +78,11 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       vue(),
       vueJsx(),
       ...(VITE_LEGACY && isBuild ? [legacy()] : []),
-      ...createVitePlugins(viteEnv, isBuild, mode),
+      ...createVitePlugins(viteEnv, isBuild),
     ],
 
     optimizeDeps: {
-      include: [
-        '@ant-design/icons-vue',
-        'ant-design-vue/es/locale/zh_CN',
-        'moment/dist/locale/zh-cn',
-        'ant-design-vue/es/locale/en_US',
-      ],
+      include: ['@iconify/iconify'],
     },
   };
 };

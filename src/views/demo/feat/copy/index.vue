@@ -3,7 +3,7 @@
     <CollapseContainer class="px-20 bg-white w-full h-32 rounded-md" title="Copy Example">
       <div class="flex justify-center">
         <a-input placeholder="请输入" v-model:value="value" />
-        <a-button type="primary" @click="handleCopy">Copy</a-button>
+        <a-button type="primary" @click="handleCopy"> Copy </a-button>
       </div>
     </CollapseContainer>
   </PageWrapper>
@@ -14,10 +14,11 @@
   import { useCopyToClipboard } from '/@/hooks/web/useCopyToClipboard';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { PageWrapper } from '/@/components/Page';
+  import { Input } from 'ant-design-vue';
 
   export default defineComponent({
     name: 'Copy',
-    components: { CollapseContainer, PageWrapper },
+    components: { CollapseContainer, PageWrapper, [Input.name]: Input },
     setup() {
       const valueRef = ref('');
       const { createMessage } = useMessage();

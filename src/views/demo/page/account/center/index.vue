@@ -25,7 +25,9 @@
       <a-col :span="7" :class="`${prefixCls}-col`">
         <CollapseContainer title="标签" :canExpan="false">
           <template v-for="(tag, index) in tags" :key="index">
-            <Tag class="mb-2">{{ tag }}</Tag>
+            <Tag class="mb-2">
+              {{ tag }}
+            </Tag>
           </template>
         </CollapseContainer>
       </a-col>
@@ -51,7 +53,7 @@
 </template>
 
 <script lang="ts">
-  import { Tag, Tabs } from 'ant-design-vue';
+  import { Tag, Tabs, Row, Col } from 'ant-design-vue';
   import { defineComponent } from 'vue';
   import { CollapseContainer } from '/@/components/Container/index';
   import Icon from '/@/components/Icon/index';
@@ -72,6 +74,8 @@
       Article,
       Application,
       Project,
+      [Row.name]: Row,
+      [Col.name]: Col,
     },
     setup() {
       return {

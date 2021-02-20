@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import dotenv from 'dotenv';
-import chalk from 'chalk';
 
 export const isFunction = (arg: unknown): arg is (...args: any[]) => any =>
   typeof arg === 'function';
@@ -24,13 +23,6 @@ export function isReportMode(): boolean {
   return process.env.REPORT === 'true';
 }
 
-/**
- * Whether to generate gzip for packaging
- */
-export function isBuildGzip(): boolean {
-  return process.env.VITE_BUILD_GZIP === 'true';
-}
-
 export interface ViteEnv {
   VITE_PORT: number;
   VITE_USE_MOCK: boolean;
@@ -41,9 +33,10 @@ export interface ViteEnv {
   VITE_GLOB_APP_SHORT_NAME: string;
   VITE_USE_CDN: boolean;
   VITE_DROP_CONSOLE: boolean;
-  VITE_BUILD_GZIP: boolean;
+  VITE_BUILD_COMPRESS: 'gzip' | 'brotli' | 'none';
   VITE_DYNAMIC_IMPORT: boolean;
   VITE_LEGACY: boolean;
+  VITE_USE_IMAGEMIN: boolean;
 }
 
 // Read all environment variable configuration files to process.env
@@ -88,38 +81,6 @@ export function getEnvConfig(match = 'VITE_GLOB_', confFiles = ['.env', '.env.pr
     }
   });
   return envConfig;
-}
-
-function consoleFn(color: string, message: any) {
-  console.log(
-    chalk.blue.bold('****************  ') +
-      (chalk as any)[color].bold(message) +
-      chalk.blue.bold('  ****************')
-  );
-}
-
-/**
- * warnConsole
- * @param message
- */
-export function successConsole(message: any) {
-  consoleFn('green', '✨ ' + message);
-}
-
-/**
- * warnConsole
- * @param message
- */
-export function errorConsole(message: any) {
-  consoleFn('red', '✨ ' + message);
-}
-
-/**
- * warnConsole
- * @param message message
- */
-export function warnConsole(message: any) {
-  consoleFn('yellow', '✨ ' + message);
 }
 
 /**

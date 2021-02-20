@@ -1,6 +1,11 @@
+/**
+ *  Introduces component library styles on demand.
+ * https://github.com/anncwb/vite-plugin-style-import
+ */
+
 import styleImport from 'vite-plugin-style-import';
 
-export function configStyleImportConfig() {
+export function configStyleImportPlugin() {
   const pwaPlugin = styleImport({
     libs: [
       {

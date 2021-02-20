@@ -113,8 +113,6 @@ class User extends VuexModule {
       // get user info
       const userInfo = await this.getUserInfoAction({ userId });
 
-      // const name = FULL_PAGE_NOT_FOUND_ROUTE.name;
-      // name && router.removeRoute(name);
       goHome && (await router.replace(PageEnum.BASE_HOME));
       return userInfo;
     } catch (error) {
@@ -125,18 +123,18 @@ class User extends VuexModule {
   @Action
   async getUserInfoAction({ userId }: GetUserInfoByUserIdParams) {
     const userInfo = await getUserInfoById({ userId });
-    const { role } = userInfo;
-    const roleList = [role.value] as RoleEnum[];
+    const { roles } = userInfo;
+    const roleList = roles.map((item) => item.value) as RoleEnum[];
     this.commitUserInfoState(userInfo);
     this.commitRoleListState(roleList);
     return userInfo;
   }
 
   /**
-   * @description: login out
+   * @description: logout
    */
   @Action
-  async loginOut(goLogin = false) {
+  async logout(goLogin = false) {
     goLogin && router.push(PageEnum.BASE_LOGIN);
   }
 
@@ -149,10 +147,10 @@ class User extends VuexModule {
     const { t } = useI18n();
     createConfirm({
       iconType: 'warning',
-      title: t('sys.app.loginOutTip'),
-      content: t('sys.app.loginOutMessage'),
+      title: t('sys.app.logoutTip'),
+      content: t('sys.app.logoutMessage'),
       onOk: async () => {
-        await this.loginOut(true);
+        await this.logout(true);
       },
     });
   }
